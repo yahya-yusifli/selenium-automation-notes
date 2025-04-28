@@ -112,3 +112,9 @@ driver.findElement(By.xpath("//tagName[@attribute='value']/following-sibling::ta
 - Example: `//label[@for='email']/following-sibling::input`
 
 ---
+### 13. Attribute Contains Match (XPath)
+
+```java
+driver.findElement(By.xpath("//button[contains(@class,'submit')]"));
+```
+- Example: `//button[contains(@class,'submit')]`
