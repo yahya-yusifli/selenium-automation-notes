@@ -107,7 +107,7 @@ driver.findElement(By.cssSelector("parentTag descendantTag"));
 ---
 
 
-# CSS Attribute Matching Operators
+# CSS Attribute Matching Operators ( Regular expression )
 
 
 | Operator | Meaning | Syntax Example | Matches Example |
