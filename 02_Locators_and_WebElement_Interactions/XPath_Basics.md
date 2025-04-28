@@ -118,3 +118,30 @@ driver.findElement(By.xpath("//tagName[@attribute='value']/following-sibling::ta
 driver.findElement(By.xpath("//button[contains(@class,'submit')]"));
 ```
 - Example: `//button[contains(@class,'submit')]`
+
+---
+### 14.1 Select Child Element by Index (Div → Button)
+
+```java
+driver.findElement(By.xpath("//div[@attribute='value']/childTag[n]"));
+```
+Example: `//div[@class='forgot-pwd-btn-conainer']/button[1]`
+
+---
+
+### 14.2 Select Child Element by Index (Form → Input)
+
+```java
+driver.findElement(By.xpath("//parentTag/childTag[n]"));
+```
+Example: `//form/input[3]`
+
+ ## XPath Structure – Usage
+
+| XPath Structure | When to Use |
+|:---|:---|
+| `//div[@attribute='value']/button[n]` | When selecting a specific `<button>` inside a `<div>`, such as buttons in modals, popups, or custom containers. |
+| `//form/input[n]` | When selecting a specific `<input>` field inside a `<form>`, such as username, email, or password fields in login or signup forms. |
+
+
+
