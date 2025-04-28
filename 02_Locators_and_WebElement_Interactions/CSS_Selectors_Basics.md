@@ -103,4 +103,89 @@ driver.findElement(By.cssSelector("parentTag descendantTag"));
 ```
 - Example: `div input`
 
+
+---
+
+
+# CSS Attribute Matching Operators
+
+
+| Operator | Meaning | Syntax Example | Matches Example |
+|:---|:---|:---|:---|
+| `=` | Exact match | `input[type='text']` | Matches `<input type="text">` |
+| `*=` | Contains match | `input[placeholder*='name']` | Matches `<input placeholder="Enter your name">` |
+| `^=` | Starts with match | `input[placeholder^='Enter']` | Matches `<input placeholder="Enter your name">` |
+| `$=` | Ends with match | `input[placeholder$='name']` | Matches `<input placeholder="Enter your name">` |
+
+---
+
+### 1. Exact Match (`=`)
+
+- **Selector:**  
+  ```java
+  driver.findElement(By.cssSelector("input[type='text']"));
+  ```
+- **HTML Example:**
+  ```html
+  <input type="text">
+  ```
+- **Meaning:**  
+  Selects `<input>` where `type` is exactly `"text"`.
+
+---
+
+### 2. Contains Match (`*=`)
+
+- **Selector:**  
+  ```java
+  driver.findElement(By.cssSelector("input[placeholder*='name']"));
+  ```
+- **HTML Example:**
+  ```html
+  <input placeholder="Enter your name">
+  ```
+- **Meaning:**  
+  Selects `<input>` where `placeholder` **contains** `"name"`.
+
+---
+
+### 3. Starts With Match (`^=`)
+
+- **Selector:**  
+  ```java
+  driver.findElement(By.cssSelector("input[placeholder^='Enter']"));
+  ```
+- **HTML Example:**
+  ```html
+  <input placeholder="Enter your name">
+  ```
+- **Meaning:**  
+  Selects `<input>` where `placeholder` **starts with** `"Enter"`.
+
+---
+
+### 4. Ends With Match (`$=`)
+
+- **Selector:**  
+  ```java
+  driver.findElement(By.cssSelector("input[placeholder$='name']"));
+  ```
+- **HTML Example:**
+  ```html
+  <input placeholder="Enter your name">
+  ```
+- **Meaning:**  
+  Selects `<input>` where `placeholder` **ends with** `"name"`.
+
+---
+
+
+### Tip
+
+- Use `*=` when IDs, classes, or names are **partially dynamic**.
+- Use `^=` or `$=` when only **start or end of attribute** is predictable.
+
+---
+
+
 ---
