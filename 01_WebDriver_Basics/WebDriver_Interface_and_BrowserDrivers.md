@@ -1,4 +1,5 @@
 # WebDriver Interface and Browser Drivers in Selenium
+![WebDriver Architecture](images/webdriver_architecture.png)
 
 ## 1. What is Interface in Java?
 
