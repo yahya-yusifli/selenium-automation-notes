@@ -10,54 +10,48 @@ driver.findElement(By.xpath("//button[text()='Sign In']")).click();
 ```
 ---
 
-# Selecting the Nth Child Element Using XPath
+## Selecting the Nth Child Element Using XPath
+
+---
+
 ### Code Example
 
 ```java
 driver.findElement(By.xpath("//form/input[3]")).sendKeys("exampleText");
 ```
 
-- `//form` ➔ Find any `<form>`.
-- `/input[3]` ➔ Select the third `<input>` child.
-- `sendKeys()` ➔ Type text inside the input.
-
 ---
 
-### Example HTML
+### Small HTML Example
 
 ```html
 <form>
-    <h2>Forgot password</h2>
     <input type="text" placeholder="Name">
     <input type="text" placeholder="Email">
     <input type="text" placeholder="Phone Number">
 </form>
 ```
+- 1st input ➔ Name
+- 2nd input ➔ Email
+- 3rd input ➔ Phone Number
 
-- 1st child: `<h2>` (ignored)
-- 2nd input: Name
-- 3rd input: Email
-- 4th input: Phone Number
-
- `//form/input[3]` selects **Phone Number input**.
+`//form/input[3]` will select **Phone Number** field.
 
 ---
 
-### Important
+### Important Points
 
-- `/input[3]` counts **only direct input children**.
-- Other tags like `<h2>`, `<div>` can break the count.
-- If page structure changes, locator may fail.
+- `//form/input[3]` ➔ Selects the **third direct `<input>`** under `<form>`.
+- Only **direct children** are counted.
+- **If page structure changes**, this XPath may fail.
 
 ---
 
-### Safer Option
+### Safer Alternative
 
 ```java
 driver.findElement(By.xpath("(//form//input)[3]")).sendKeys("exampleText");
 ```
-- `(//form//input)[3]` ➔ Selects third `<input>` anywhere inside form.
-- Ignores other tags.
+- `(//form//input)[3]` ➔ Selects the **third input** anywhere inside the form, even if deeply nested.
 
 ---
-
