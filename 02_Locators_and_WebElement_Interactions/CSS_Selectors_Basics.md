@@ -95,3 +95,12 @@ driver.findElement(By.cssSelector("tagName[attribute1='value'][attribute2='value
 - Example: `input[type='text'][placeholder='Name']`
 
 ---
+
+### 11. Descendant Selection (Space between tags)
+
+```java
+driver.findElement(By.cssSelector("parentTag descendantTag"));
+```
+- Example: `div input`
+
+---
