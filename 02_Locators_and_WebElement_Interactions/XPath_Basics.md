@@ -126,6 +126,12 @@ driver.findElement(By.xpath("//button[contains(@class,'submit')]"));
 driver.findElement(By.xpath("//div[@attribute='value']/childTag[n]"));
 ```
 Example: `//div[@class='forgot-pwd-btn-conainer']/button[1]`
+```html
+<div class="forgot-pwd-btn-conainer">
+    <button class="go-to-login-btn">Go to Login</button>
+    <button class="reset-pwd-btn">Reset Login</button>
+</div>
+```
 
 ---
 
@@ -143,5 +149,5 @@ Example: `//form/input[3]`
 | `//div[@attribute='value']/button[n]` | When selecting a specific `<button>` inside a `<div>`, such as buttons in modals, popups, or custom containers. |
 | `//form/input[n]` | When selecting a specific `<input>` field inside a `<form>`, such as username, email, or password fields in login or signup forms. |
 
-
+---
 
