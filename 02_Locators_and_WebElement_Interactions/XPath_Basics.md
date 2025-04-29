@@ -149,13 +149,14 @@ Example: `//form/input[3]`
 driver.findElement(By.xpath("//header/div/button[1]/following-sibling::button"));
 ```
 Explanation:
-Selects all <button> elements that are siblings after the first <button> inside <div> which is inside <header>.
+Selects all <button> elements that are siblings after the first <button> inside a <div> which is inside a <header>.
 
 Example Usage:
-If there are multiple buttons in a header div, it selects the ones after the first button.
+If there are multiple buttons inside a <div> under a <header>, it selects all the buttons that come after the first one.
 
 ---
- ## XPath Structure – Usage
+
+## XPath Structure – Usage
 
 | XPath Structure | When to Use |
 |:---|:---|
