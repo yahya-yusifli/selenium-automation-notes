@@ -142,6 +142,19 @@ driver.findElement(By.xpath("//parentTag/childTag[n]"));
 ```
 Example: `//form/input[3]`
 
+---
+### 15. Select Following Sibling Element
+
+```java
+driver.findElement(By.xpath("//header/div/button[1]/following-sibling::button"));
+```
+Explanation:
+Selects all <button> elements that are siblings after the first <button> inside <div> which is inside <header>.
+
+Example Usage:
+If there are multiple buttons in a header div, it selects the ones after the first button.
+
+---
  ## XPath Structure – Usage
 
 | XPath Structure | When to Use |
