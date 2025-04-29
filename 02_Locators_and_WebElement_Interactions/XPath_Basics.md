@@ -24,9 +24,7 @@
 | **Child**                | `//ul/li`                                                      | Selects `<li>` elements that are **direct** children of `<ul>`                                 | `driver.findElement(By.xpath("//ul/li"));`                                                   |
 | **Parent**               | `//input/..`                                                   | Selects the **parent** of every `<input>` element                                              | `driver.findElement(By.xpath("//input[@id='q']/.."));`                                       |
 | **Ancestor**             | `//span/ancestor::div`                                         | Selects all `<div>` ancestors of each `<span>`                                                | `driver.findElement(By.xpath("//span[@class='icon']/ancestor::div"));`                       |
-| **Following-Sibling**    | `//label/following-sibling::input`                             | Selects `<input>` siblings **immediately** after `<label>`                                     | `driver.findElement(By.xpath("//label[text()='Email']/following-sibling::input"));`          |
-| **General-Sibling**      | `//h2/preceding-sibling::p`                                    | Selects **all** `<p>` siblings **before** each `<h2>`                                          | `driver.findElement(By.xpath("//h2[@id='title']/preceding-sibling::p"));`                     |
-| **Normalize-Space Text** | `//p[normalize-space(text())='trimmed text']`                 | Selects `<p>` whose text, after trimming whitespace, equals `trimmed text`                     | `driver.findElement(By.xpath("//p[normalize-space(text())='Hello World']"));`                 |
+| **Following-Sibling**    | `//label/following-sibling::input`                             | Selects `<input>` siblings **immediately
 
 ---
 ### 1. Select by Tag Name
