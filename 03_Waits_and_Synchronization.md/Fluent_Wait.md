@@ -1,11 +1,12 @@
 ## Fluent Wait in Selenium
 
 Fluent Wait is an advanced form of explicit wait that:
+Fluent Wait is a Selenium wait that repeatedly checks for a condition at defined time intervals, ignoring specified exceptions, until a maximum timeout is reached.
 
 * Defines polling intervals (how often to check)
 * Ignores specific exceptions during waiting
 * Gives fine control over the wait process
-
+  
 ---
 
 ### Example Usage
@@ -41,6 +42,11 @@ This waits up to **30 seconds**, checking every **5 seconds**, ignoring `NoSuchE
 
 ---
 
+### Difference from WebDriverWait
+
+WebDriverWait is a simplified form of Fluent Wait with default polling (500ms) and no custom exception handling, making it easier but less flexible.
+
+---
 ### When to Use
 
 * On elements that appear unpredictably (not just after page load)
