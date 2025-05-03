@@ -1,9 +1,14 @@
-## Fluent Wait
+## Fluent Wait in Selenium
 
-Fluent wait is an advanced form of explicit wait that:
-- Defines polling intervals
-- Ignores specific exceptions
-- Provides fine control over how often conditions are checked
+Fluent Wait is an advanced form of explicit wait that:
+
+* Defines polling intervals (how often to check)
+* Ignores specific exceptions during waiting
+* Gives fine control over the wait process
+
+---
+
+### Example Usage
 
 ```java
 Wait<WebDriver> fluentWait = new FluentWait<>(driver)
@@ -13,6 +18,34 @@ Wait<WebDriver> fluentWait = new FluentWait<>(driver)
 
 fluentWait.until(ExpectedConditions.visibilityOfElementLocated(By.id("username")));
 ```
+
+This waits up to **30 seconds**, checking every **5 seconds**, ignoring `NoSuchElementException` until the condition is met.
+
+---
+
+### Pros
+
+* Custom polling intervals for better performance
+* Can ignore specific exceptions (e.g., element not found)
+* More flexible than standard explicit waits
+* Reduces unnecessary checks compared to fixed waits
+
+---
+
+### Cons
+
+* Slightly more complex to implement
+* Overuse can make code harder to maintain
+* Needs careful tuning to avoid too long or too short polling
+* Still depends on correct ExpectedConditions
+
+---
+
+### When to Use
+
+* On elements that appear unpredictably (not just after page load)
+* When dealing with flaky elements or AJAX-heavy apps
+* To replace or improve upon hard-coded waits like `Thread.sleep()`
 
 ---
 
