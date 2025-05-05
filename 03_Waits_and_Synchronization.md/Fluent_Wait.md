@@ -44,7 +44,8 @@ This waits up to **30 seconds**, checking every **5 seconds**, ignoring `NoSuchE
 
 ### Difference from WebDriverWait
 
-WebDriverWait is a simplified form of Fluent Wait with default polling (500ms) and no custom exception handling, making it easier but less flexible.
+- WebDriverWait is a simplified form of Fluent Wait with default polling (500ms) and no custom exception handling, making it easier but less flexible.
+- Unlike WebDriver wait, we need to build customized wait methods based on condition.
 
 ---
 ### When to Use
