@@ -171,4 +171,43 @@ Safari has fewer configurable options compared to Chrome/Firefox.
 * **Cross-browser Automation**: While the patterns are similar, each browser has unique flags, so always refer to official documentation.
 
 ---
+# Selenium Browser Options Comparison
 
+| Feature / Method                             | ChromeOptions                                   | FirefoxOptions                                    | EdgeOptions                                      | SafariOptions                                  |
+|---------------------------------------------|------------------------------------------------|--------------------------------------------------|-------------------------------------------------|-----------------------------------------------|
+| Set binary path                             | `setBinary(String path)`                       | `setBinary(String path)`                         | `setBinary(String path)`                        | Not available (uses system Safari)             |
+| Add arguments                               | `addArguments(String... args)`                 | `addArguments(String... args)`                   | `addArguments(String... args)`                  | Not available                                 |
+| Add extensions                              | `addExtensions(File... extensions)`            | `addExtensions(File... extensions)`              | `addExtensions(File... extensions)`             | Not available                                 |
+| Set preferences                             | `setExperimentalOption("prefs", Map)`          | `addPreference(String key, Object value)`        | `setExperimentalOption("prefs", Map)`          | Not available                                 |
+| Accept insecure certificates                | `setAcceptInsecureCerts(true/false)`           | `setAcceptInsecureCerts(true/false)`             | `setAcceptInsecureCerts(true/false)`           | Limited (via `setAutomaticInspection`)        |
+| Set proxy                                   | `setCapability("proxy", proxy)`                | `setCapability("proxy", proxy)`                  | `setCapability("proxy", proxy)`                | `setCapability("proxy", proxy)`               |
+| Headless mode                               | `addArguments("--headless")` or `setHeadless(true)` | `setHeadless(true)`                             | `addArguments("headless")` or `setHeadless(true)` | Limited / Not supported natively             |
+| Enable/disable sandbox                      | `addArguments("--no-sandbox")`                 | Not directly applicable                         | `addArguments("--no-sandbox")`                 | Not applicable                                |
+| Mobile emulation                            | `setExperimentalOption("mobileEmulation", Map)`| Not supported                                   | Not supported                                  | Not supported                                 |
+| Window size / position                      | `addArguments("--window-size=width,height")`   | `addArguments("--width=width", "--height=height")`| `addArguments("--window-size=width,height")`   | Set later with WebDriver.manage()             |
+| Enable logging                              | `setCapability("goog:loggingPrefs", prefs)`    | `setCapability("moz:firefoxOptions", prefs)`    | `setCapability("ms:loggingPrefs", prefs)`      | Limited                                       |
+| Enable performance tracking                 | `setExperimentalOption("perfLoggingPrefs", Map)`| Not directly applicable                         | Not directly applicable                        | Not available                                 |
+| Set capabilities (general)                  | `setCapability(String key, Object value)`      | `setCapability(String key, Object value)`        | `setCapability(String key, Object value)`      | `setCapability(String key, Object value)`     |
+
+---
+
+## Notes
+
+**ChromeOptions**
+- Provides extensive experimental controls through `setExperimentalOption`.
+- Supports mobile emulation and device metrics.
+- Integrates with Chrome performance logging.
+
+**FirefoxOptions**
+- Integrates tightly with Firefox Developer Tools.
+- Uses `addPreference` for detailed profile-level control.
+
+**EdgeOptions**
+- Shares many methods with ChromeOptions (both are Chromium-based).
+- Includes Microsoft-specific capabilities for Edge.
+
+**SafariOptions**
+- Limited customization due to macOS security restrictions.
+- Relies on system Safari settings and `setCapability`.
+
+---
