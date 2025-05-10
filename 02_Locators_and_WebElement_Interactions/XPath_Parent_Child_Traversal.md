@@ -113,5 +113,3 @@ This XPath selects the second `<li>` element.
 | Anywhere descendant  | `//div//input`                       | Any level nested element under parent     |
 | Child to parent      | `//input/..`                         | Move up to parent element                 |
 | Child by index       | `//ul/li[2]`                         | Select nth child element inside a parent  |
-
-If you want, I can also add advanced examples like sibling traversal or combining multiple parent-child levels. Let me know!
