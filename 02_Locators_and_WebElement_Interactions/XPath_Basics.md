@@ -12,6 +12,11 @@ driver.findElement(By.xpath("//tagName"));
 ```
 - Example: `//input`
 
+**HTML Example:**
+```html
+<input type="text" name="username">
+```
+
 ---
 
 ### 2. Select by Attribute
@@ -20,6 +25,11 @@ driver.findElement(By.xpath("//tagName"));
 driver.findElement(By.xpath("//tagName[@attribute='value']"));
 ```
 - Example: `//input[@id='username']`
+
+**HTML Example:**
+```html
+<input id="username" type="text" name="username">
+```
 
 ---
 
@@ -30,6 +40,11 @@ driver.findElement(By.xpath("//tagName[@attribute1='value' and @attribute2='valu
 ```
 - Example: `//input[@type='text' and @placeholder='Email']`
 
+**HTML Example:**
+```html
+<input type="text" placeholder="Email" name="email">
+```
+
 ---
 
 ### 4. Select by Text Content
@@ -38,6 +53,11 @@ driver.findElement(By.xpath("//tagName[@attribute1='value' and @attribute2='valu
 driver.findElement(By.xpath("//tagName[text()='Exact Text']"));
 ```
 - Example: `//button[text()='Login']`
+
+**HTML Example:**
+```html
+<button>Login</button>
+```
 
 ---
 
@@ -48,6 +68,11 @@ driver.findElement(By.xpath("//tagName[contains(text(),'PartialText')]"));
 ```
 - Example: `//button[contains(text(),'Log')]`
 
+**HTML Example:**
+```html
+<button>Log In</button>
+```
+
 ---
 
 ### 6. Select by Attribute Contains
@@ -56,6 +81,11 @@ driver.findElement(By.xpath("//tagName[contains(text(),'PartialText')]"));
 driver.findElement(By.xpath("//tagName[contains(@attribute,'partialValue')]"));
 ```
 - Example: `//input[contains(@placeholder,'mail')]`
+
+**HTML Example:**
+```html
+<input type="text" placeholder="Email address">
+```
 
 ---
 
@@ -66,6 +96,11 @@ driver.findElement(By.xpath("//tagName[starts-with(@attribute,'valueStart')]"));
 ```
 - Example: `//input[starts-with(@id,'user')]`
 
+**HTML Example:**
+```html
+<input id="userNameField" type="text">
+```
+
 ---
 
 ### 8. Parent to Child Selection
@@ -74,6 +109,14 @@ driver.findElement(By.xpath("//tagName[starts-with(@attribute,'valueStart')]"));
 driver.findElement(By.xpath("//parentTag/childTag"));
 ```
 - Example: `//form/input`
+
+**HTML Example:**
+```html
+<form>
+    <input type="text" name="username">
+    <input type="password" name="password">
+</form>
+```
 
 ---
 
@@ -84,6 +127,15 @@ driver.findElement(By.xpath("//parentTag//descendantTag"));
 ```
 - Example: `//div//input`
 
+**HTML Example:**
+```html
+<div>
+    <section>
+        <input type="text" name="search">
+    </section>
+</div>
+```
+
 ---
 
 ### 10. Select by Index (Nth Element)
@@ -93,6 +145,12 @@ driver.findElement(By.xpath("(//tagName[@attribute='value'])[n]"));
 ```
 - Example: `(//input[@type='text'])[2]`
 
+**HTML Example:**
+```html
+<input type="text" name="first">
+<input type="text" name="second">
+```
+
 ---
 
 ### 11. Navigate to Parent
@@ -100,7 +158,14 @@ driver.findElement(By.xpath("(//tagName[@attribute='value'])[n]"));
 ```java
 driver.findElement(By.xpath("//childTag/.."));
 ```
-- Example: `//input/..` (goes to input's parent)
+- Example: `//input/..`
+
+**HTML Example:**
+```html
+<div>
+    <input type="text" name="username">
+</div>
+```
 
 ---
 
@@ -111,7 +176,14 @@ driver.findElement(By.xpath("//tagName[@attribute='value']/following-sibling::ta
 ```
 - Example: `//label[@for='email']/following-sibling::input`
 
+**HTML Example:**
+```html
+<label for="email">Email</label>
+<input type="email" id="email">
+```
+
 ---
+
 ### 13. Attribute Contains Match (XPath - Regular expression)
 
 ```java
@@ -119,13 +191,21 @@ driver.findElement(By.xpath("//button[contains(@class,'submit')]"));
 ```
 - Example: `//button[contains(@class,'submit')]`
 
+**HTML Example:**
+```html
+<button class="btn submit-btn">Submit</button>
+```
+
 ---
+
 ### 14.1 Select Child Element by Index (Div → Button)
 
 ```java
 driver.findElement(By.xpath("//div[@attribute='value']/childTag[n]"));
 ```
-Example: `//div[@class='forgot-pwd-btn-conainer']/button[1]`
+- Example: `//div[@class='forgot-pwd-btn-conainer']/button[1]`
+
+**HTML Example:**
 ```html
 <div class="forgot-pwd-btn-conainer">
     <button class="go-to-login-btn">Go to Login</button>
@@ -140,19 +220,55 @@ Example: `//div[@class='forgot-pwd-btn-conainer']/button[1]`
 ```java
 driver.findElement(By.xpath("//parentTag/childTag[n]"));
 ```
-Example: `//form/input[3]`
+- Example: `//form/input[3]`
+
+**HTML Example:**
+```html
+<form>
+    <input type="text" name="firstName" value="John">
+    <input type="text" name="lastName" value="Doe">
+    <input type="email" name="email" value="john.doe@example.com">
+    <input type="password" name="password">
+</form>
+```
+
+```java
+WebElement thirdInput = driver.findElement(By.xpath("//form/input[3]"));
+System.out.println("Third input type: " + thirdInput.getAttribute("type"));  // Output: email
+System.out.println("Third input name: " + thirdInput.getAttribute("name"));  // Output: email
+```
 
 ---
+
 ### 15. Select Following Sibling Element
 
 ```java
 driver.findElement(By.xpath("//header/div/button[1]/following-sibling::button"));
 ```
-Explanation:
-Selects all <button> elements that are siblings after the first <button> inside a <div> which is inside a <header>.
+- Explanation:
+Selects all `<button>` elements that are siblings after the first `<button>` inside a `<div>` under a `<header>`.
 
-Example Usage:
-If there are multiple buttons inside a <div> under a <header>, it selects all the buttons that come after the first one.
+**HTML Example:**
+```html
+<header>
+    <div>
+        <button id="firstBtn">First</button>
+        <button id="secondBtn">Second</button>
+        <button id="thirdBtn">Third</button>
+    </div>
+</header>
+```
+
+**Java Example:**
+```java
+// Get the second button (sibling after the first)
+WebElement secondButton = driver.findElement(By.xpath("//header/div/button[1]/following-sibling::button[1]"));
+System.out.println("Second button text: " + secondButton.getText());  // Outputs: Second
+
+// Get the third button (second sibling after the first)
+WebElement thirdButton = driver.findElement(By.xpath("//header/div/button[1]/following-sibling::button[2]"));
+System.out.println("Third button text: " + thirdButton.getText());  // Outputs: Third
+```
 
 ---
 
@@ -162,6 +278,3 @@ If there are multiple buttons inside a <div> under a <header>, it selects all th
 |:---|:---|
 | `//div[@attribute='value']/button[n]` | When selecting a specific `<button>` inside a `<div>`, such as buttons in modals, popups, or custom containers. |
 | `//form/input[n]` | When selecting a specific `<input>` field inside a `<form>`, such as username, email, or password fields in login or signup forms. |
-
----
-
