@@ -1,18 +1,15 @@
-## 01 – WebDriver Setup and Basics
-
-This document provides the foundational steps and commands for setting up Selenium WebDriver and performing basic browser operations.
+**01 – WebDriver Setup and Basics**
 
 ---
+**1. Setting Up WebDriver**
 
-### 1. Setting Up WebDriver
-
-#### Import Required Packages
+**Import Required Packages**
 ```java
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 ```
 
-#### WebDriver Setup Example
+**WebDriver Setup Example**
 ```java
 System.setProperty("webdriver.chrome.driver", "path/to/chromedriver");
 WebDriver driver = new ChromeDriver();
@@ -26,7 +23,7 @@ WebDriver driver = new ChromeDriver();
 
 ---
 
-### 2. WebDriver Interface and Browser Drivers
+**2. WebDriver Interface and Browser Drivers**
 
 - `WebDriver` is an interface implemented by browser-specific classes like `ChromeDriver`, `FirefoxDriver`, etc.
 - Each browser requires its own driver:
@@ -34,7 +31,7 @@ WebDriver driver = new ChromeDriver();
   - Firefox → geckodriver
   - Edge → msedgedriver
 
-#### Common Implementations:
+**Common Implementations:**
 ```java
 WebDriver driver = new ChromeDriver();
 WebDriver driver = new FirefoxDriver();
@@ -43,9 +40,9 @@ WebDriver driver = new EdgeDriver();
 
 ---
 
-### 3. Launching a Browser
+**3. Launching a Browser**
 
-#### Open Chrome Browser and Maximize
+**Open Chrome Browser and Maximize**
 ```java
 WebDriver driver = new ChromeDriver();
 driver.manage().window().maximize();
@@ -53,62 +50,61 @@ driver.manage().window().maximize();
 
 ---
 
-### 4. Opening a URL with `.get()`
-
+**4. Opening a URL with `.get()`**
 ```java
 driver.get("https://example.com");
 ```
-- This method opens the specified URL and waits for the page to load completely.
+This method opens the specified URL and waits for the page to load completely.
 
 ---
 
-### 5. Common Browser Commands
+**5. Common Browser Commands**
 
-#### Get Page Title
+**Get Page Title**
 ```java
 String title = driver.getTitle();
 System.out.println("Page Title: " + title);
 ```
 
-#### Get Current URL
+**Get Current URL**
 ```java
 String url = driver.getCurrentUrl();
 System.out.println("Current URL: " + url);
 ```
 
-#### Navigate to Another Page
+**Navigate to Another Page**
 ```java
 driver.navigate().to("https://another-page.com");
 ```
 
-#### Go Back and Forward
+**Go Back and Forward**
 ```java
 driver.navigate().back();
 driver.navigate().forward();
 ```
 
-#### Refresh the Page
+**Refresh the Page**
 ```java
 driver.navigate().refresh();
 ```
 
 ---
 
-### 6. Closing and Quitting the Browser
+**6. Closing and Quitting the Browser**
 
-#### Close the Current Window
+**Close the Current Window**
 ```java
 driver.close();
 ```
 
-#### Quit All Browser Windows
+**Quit All Browser Windows**
 ```java
 driver.quit();
 ```
 
 ---
 
-### Summary Table
+**Summary Table**
 
 | Action                | Method                        |
 |-----------------------|-------------------------------|
@@ -122,4 +118,3 @@ driver.quit();
 | Close Window          | `driver.close()`              |
 | Quit Browser          | `driver.quit()`               |
 
-Let me know if you want this turned into a reusable starter template or added to a Selenium project scaffold.
