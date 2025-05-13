@@ -1,6 +1,6 @@
-**01 – WebDriver Setup and Basics**
+## 01 – WebDriver Setup and Basics**
 
----
+
 **1. Setting Up WebDriver**
 
 **Import Required Packages**
