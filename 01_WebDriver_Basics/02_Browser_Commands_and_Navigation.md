@@ -1,5 +1,5 @@
 
-## 02 – Browser Commands and Navigation**
+## 02 – Browser Commands and Navigation
 
 
 ---
