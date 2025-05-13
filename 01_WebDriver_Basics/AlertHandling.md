@@ -1,4 +1,4 @@
-**Handling Alerts in Selenium WebDriver**
+## Handling Alerts in Selenium WebDriver
 
 Handle different types of JavaScript alerts in Selenium WebDriver.
 
