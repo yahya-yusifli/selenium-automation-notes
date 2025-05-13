@@ -100,4 +100,3 @@ string innertext = (string) js.executescript("return arguments[0].innertext;", e
 - clearly comment why js is used to improve maintainability
 - avoid overuse to keep code clean and test-friendly
 
-let me know if you’d like to wrap this into a `javascriptactions` utility class for reuse in your framework.
