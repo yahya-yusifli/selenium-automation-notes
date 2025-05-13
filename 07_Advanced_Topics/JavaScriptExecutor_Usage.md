@@ -1,103 +1,103 @@
-## JavaScriptExecutor in Selenium
+## JavaScriptExecutor in selenium
 
-JavaScriptExecutor is an interface in Selenium WebDriver that allows you to run JavaScript code directly in the browser from Java automation scripts. It is helpful when standard WebDriver methods cannot interact with certain elements or when JavaScript-only operations are needed.
-
----
-
-**Why Use JavaScriptExecutor?**
-- Interact with elements WebDriver can’t handle easily (e.g., hidden, shadow DOM)
-- Perform scroll operations
-- Modify or read attributes directly
-- Trigger JS-based events
-- Bypass some browser limitations
-- Improve speed where WebDriver is unreliable
+`javascriptexecutor` is an interface in selenium webdriver that allows you to run javascript code directly in the browser from java automation scripts. it is helpful when standard webdriver methods cannot interact with certain elements or when javascript-only operations are needed.
 
 ---
 
-**When to Use JavaScriptExecutor**
-
-**1. ElementClickInterceptedException**
-```java
-js.executeScript("arguments[0].click();", element);
-```
-Use when `.click()` fails due to overlays or popups blocking the element.
-
-**2. Element in DOM but Not Visible**
-```java
-js.executeScript("arguments[0].click();", element);
-```
-Use when an element has `display: none` or is only visible on hover.
-
-**3. Scroll to an Element**
-```java
-js.executeScript("arguments[0].scrollIntoView(true);", element);
-```
-Use to make an element visible before interacting.
-
-**4. Speed and Flakiness Fixes**
-JavaScript can be faster and more reliable in JS-heavy applications.
-
-**5. Set Value in Field Blocking sendKeys()**
-```java
-js.executeScript("arguments[0].value='myValue';", input);
-```
+**why use javascriptexecutor?**
+- interact with elements webdriver can’t handle easily (e.g., hidden, shadow dom)
+- perform scroll operations
+- modify or read attributes directly
+- trigger js-based events
+- bypass some browser limitations
+- improve speed where webdriver is unreliable
 
 ---
 
-**Basic Syntax**
+**when to use javascriptexecutor**
+
+**1. elementclickinterceptedexception**
 ```java
-JavascriptExecutor js = (JavascriptExecutor) driver;
-js.executeScript("your JavaScript code here");
+js.executescript("arguments[0].click();", element);
+```
+use when `.click()` fails due to overlays or popups blocking the element.
+
+**2. element in dom but not visible**
+```java
+js.executescript("arguments[0].click();", element);
+```
+use when an element has `display: none` or is only visible on hover.
+
+**3. scroll to an element**
+```java
+js.executescript("arguments[0].scrollintoview(true);", element);
+```
+use to make an element visible before interacting.
+
+**4. speed and flakiness fixes**
+javascript can be faster and more reliable in js-heavy applications.
+
+**5. set value in field blocking sendkeys()**
+```java
+js.executescript("arguments[0].value='myvalue';", input);
 ```
 
 ---
 
-**Common Use Cases**
-
-**Execute JavaScript**
+**basic syntax**
 ```java
-js.executeScript("alert('Hello World');");
-```
-
-**Return a Value**
-```java
-String pageTitle = (String) js.executeScript("return document.title;");
-```
-
-**Click an Element**
-```java
-WebElement button = driver.findElement(By.id("submit"));
-js.executeScript("arguments[0].click();", button);
-```
-
-**Set Value to Input**
-```java
-WebElement input = driver.findElement(By.id("username"));
-js.executeScript("arguments[0].value='myUsername';", input);
-```
-
-**Scroll the Page**
-```java
-js.executeScript("window.scrollBy(0,500);");  // Scroll down
-js.executeScript("window.scrollTo(0, document.body.scrollHeight);");  // Scroll to bottom
-js.executeScript("arguments[0].scrollIntoView(true);", element);  // Scroll to element
-```
-
-**Highlight an Element**
-```java
-js.executeScript("arguments[0].style.border='3px solid red'", element);
-```
-
-**Retrieve Element Attributes**
-```java
-String innerText = (String) js.executeScript("return arguments[0].innerText;", element);
+javascriptexecutor js = (javascriptexecutor) driver;
+js.executescript("your javascript code here");
 ```
 
 ---
 
-**Best Practices**
-- Use JavaScriptExecutor only when WebDriver’s native methods fail.
-- Clearly comment why JS is used to improve maintainability.
-- Avoid overuse to keep code clean and test-friendly.
+**common use cases**
 
-Let me know if you’d like to wrap this into a `JavaScriptActions` utility class for reuse in your framework.
+**execute javascript**
+```java
+js.executescript("alert('hello world');");
+```
+
+**return a value**
+```java
+string pagetitle = (string) js.executescript("return document.title;");
+```
+
+**click an element**
+```java
+webelement button = driver.findelement(by.id("submit"));
+js.executescript("arguments[0].click();", button);
+```
+
+**set value to input**
+```java
+webelement input = driver.findelement(by.id("username"));
+js.executescript("arguments[0].value='myusername';", input);
+```
+
+**scroll the page**
+```java
+js.executescript("window.scrollby(0,500);");
+js.executescript("window.scrollto(0, document.body.scrollheight);");
+js.executescript("arguments[0].scrollintoview(true);", element);
+```
+
+**highlight an element**
+```java
+js.executescript("arguments[0].style.border='3px solid red';", element);
+```
+
+**retrieve element attributes**
+```java
+string innertext = (string) js.executescript("return arguments[0].innertext;", element);
+```
+
+---
+
+**best practices**
+- use javascriptexecutor only when webdriver’s native methods fail
+- clearly comment why js is used to improve maintainability
+- avoid overuse to keep code clean and test-friendly
+
+let me know if you’d like to wrap this into a `javascriptactions` utility class for reuse in your framework.
