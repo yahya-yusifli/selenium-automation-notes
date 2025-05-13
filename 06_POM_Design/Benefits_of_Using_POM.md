@@ -85,4 +85,3 @@ public class LoginPage {
 | Debugging       | Easier to trace test failures                    |
 | CI/CD           | Structure aligns well with modern automation     |
 
-If you want, I can generate a complete sample POM framework or create separate pages for Login, Home, and Product classes. Let me know!
