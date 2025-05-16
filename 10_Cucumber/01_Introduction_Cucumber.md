@@ -1,155 +1,196 @@
 ## Cucumber
 
-**what is cucumber?**
-cucumber is a behavior-driven development (bdd) testing framework that allows writing test cases in plain language using **gherkin syntax**. it helps bridge the communication gap between technical and non-technical stakeholders (like qa, devs, and business analysts).
+**what is cucumber?**  
+cucumber is a behavior-driven development (bdd) framework that allows writing test scenarios in plain language using gherkin syntax. it enables business stakeholders, qa testers, and developers to collaborate and understand system behavior clearly.
 
 ---
 
-**why use cucumber?**
-
-* enables non-programmers to understand and contribute to test cases
-* acts as **live documentation** of the system's behavior
-* improves collaboration in agile teams
-* integrates easily with selenium, junit, testng, and maven
-* supports **data-driven testing** using scenario outlines
-
----
-
-**core components**
-
-| component        | role                                                               |
-| ---------------- | ------------------------------------------------------------------ |
-| feature          | describes a feature or functionality in business terms             |
-| scenario         | one test example or use case                                       |
-| scenario outline | template scenario with placeholders and example data               |
-| step definition  | maps gherkin steps to java methods with selenium/test logic        |
-| hook             | setup or teardown code that runs before/after each scenario        |
-| runner           | test runner class that connects cucumber to junit/testng framework |
+**why use cucumber?**  
+- bridges communication between technical and non-technical teams  
+- promotes agile and test-first development  
+- improves readability and traceability of test cases  
+- integrates seamlessly with selenium for browser automation  
+- supports data-driven testing and reuse of test steps  
+- enables living documentation that updates with the product
 
 ---
 
-**gherkin syntax keywords**
+**main components**
 
-* `feature`: describes the overall functionality being tested
-* `scenario`: defines a concrete use case or user interaction
-* `given`: precondition step
-* `when`: main action the user takes
-* `then`: expected result
-* `and` / `but`: additional conditions
+| component        | purpose                                                                 |
+|------------------|-------------------------------------------------------------------------|
+| feature          | high-level description of application functionality                     |
+| scenario         | individual test case within a feature                                   |
+| scenario outline | template for running the same test with multiple data sets              |
+| step definition  | java method that maps a gherkin step to executable test code            |
+| feature file     | `.feature` file that holds all features, scenarios, and steps           |
+| hooks            | code to run before or after a scenario (setup/teardown)                 |
+| runner class     | configures cucumber to locate features, step defs, reports, etc.        |
 
-**example feature file**
+---
+
+**gherkin keywords**  
+- `feature:` groups scenarios under a specific business capability  
+- `scenario:` defines a test case with given-when-then steps  
+- `scenario outline:` allows same test to run with different data  
+- `given:` sets up the initial context  
+- `when:` performs the main action  
+- `then:` verifies the expected outcome  
+- `and`, `but:` support multiple steps in a flow
+
+---
+
+**gherkin feature file example**
 
 ```gherkin
-feature: login feature
+feature: user login
 
-  scenario: valid login
-    given user is on login page
-    when user enters valid credentials
-    then user should be redirected to homepage
+  scenario: successful login
+    given user is on the login page
+    when user enters valid username and password
+    then user should be redirected to the dashboard
 ```
 
 ---
 
-**step definitions in java**
+**java step definitions**
 
 ```java
-@Given("user is on login page")
-public void user_on_login_page() {
+@Given("user is on the login page")
+public void userOnLoginPage() {
     driver.get("https://example.com/login");
 }
 
-@When("user enters valid credentials")
-public void user_enters_valid_credentials() {
-    driver.findElement(By.id("email")).sendKeys("user@example.com");
+@When("user enters valid username and password")
+public void enterCredentials() {
+    driver.findElement(By.id("email")).sendKeys("test@example.com");
     driver.findElement(By.id("password")).sendKeys("123456");
-    driver.findElement(By.id("loginButton")).click();
+    driver.findElement(By.id("submit")).click();
 }
 
-@Then("user should be redirected to homepage")
-public void redirected_to_homepage() {
-    Assert.assertTrue(driver.getCurrentUrl().contains("homepage"));
+@Then("user should be redirected to the dashboard")
+public void redirectedToDashboard() {
+    Assert.assertTrue(driver.getCurrentUrl().contains("dashboard"));
 }
 ```
 
 ---
 
-**scenario outline (data-driven)**
+**scenario outline (for data-driven testing)**
 
 ```gherkin
-scenario outline: login with valid and invalid users
-  given user is on login page
+scenario outline: login with multiple credentials
+  given user is on the login page
   when user enters "<username>" and "<password>"
-  then user should see "<result>"
+  then user should see "<message>"
 
 examples:
-  | username      | password | result   |
-  | valid_user    | 123456   | success  |
-  | invalid_user  | 000000   | failure  |
+  | username         | password | message            |
+  | test@example.com | 123456   | welcome            |
+  | wrong@user.com   | 000000   | invalid credentials |
+```
+
+**step definition example:**
+
+```java
+@When("user enters {string} and {string}")
+public void user_enters_credentials(String username, String password) {
+    driver.findElement(By.id("email")).sendKeys(username);
+    driver.findElement(By.id("password")).sendKeys(password);
+    driver.findElement(By.id("submit")).click();
+}
+
+@Then("user should see {string}")
+public void user_should_see_message(String expectedMessage) {
+    WebElement msg = driver.findElement(By.id("message"));
+    Assert.assertTrue(msg.getText().contains(expectedMessage));
+}
 ```
 
 ---
 
-**runner class using junit**
+**test runner setup**
 
 ```java
 @RunWith(Cucumber.class)
 @CucumberOptions(
     features = "src/test/resources/features",
-    glue = "stepdefinitions",
-    plugin = {"pretty", "html:target/cucumber-report.html"},
-    monochrome = true
+    glue = {"stepdefinitions", "hooks"},
+    plugin = {"pretty", "html:target/cucumber-reports.html", "json:target/report.json"},
+    monochrome = true,
+    tags = "@regression"
 )
 public class TestRunner {}
 ```
 
 ---
 
-**hooks: setup and teardown**
+**hooks for setup and teardown**
 
 ```java
 @Before
-public void setup() {
+public void setupBrowser() {
     driver = new ChromeDriver();
+    driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
     driver.manage().window().maximize();
 }
 
 @After
-public void teardown() {
+public void closeBrowser() {
     driver.quit();
 }
 ```
 
 ---
 
-**using tags to control execution**
+**using tags to organize tests**
 
 ```gherkin
-@smoke
-scenario: verify login works
+@regression
+scenario: user logs in with valid credentials
 ```
+
+runner class:
 
 ```java
-@CucumberOptions(tags = "@smoke")
+@CucumberOptions(tags = "@regression")
+```
+
+you can also combine tags:  
+- `@CucumberOptions(tags = "@smoke and @regression")`  
+- `@CucumberOptions(tags = "@login or @register")`
+
+---
+
+**cucumber reporting options**  
+- built-in: pretty, html, json, junit  
+- external:  
+  - extent reports integration for professional html reports  
+  - allure reports for rich interactive test results
+
+---
+
+**advanced tips**  
+- store locators in page classes (page object model)  
+- modularize steps to increase reusability  
+- avoid using Thread.sleep(); use WebDriverWait  
+- write short, focused steps — 1 action per step
+
+---
+
+**project structure recommendation**
+
+```
+src/test/java
+├── features/             # .feature files
+├── stepdefinitions/      # java classes for step mapping
+├── hooks/                # @Before and @After methods
+├── runners/              # cucumber runner classes
+├── pages/                # pom classes for selenium actions
+└── utils/                # utility classes (config reader, driver setup)
 ```
 
 ---
 
-**reporting options**
-
-* built-in: `pretty`, `html`, `json`, `junit`
-* external: `extentReports`, `allure`
-
----
-
-**best practices**
-
-* use page object model (pom) for cleaner code
-* reuse step definitions instead of duplicating logic
-* avoid technical jargon in gherkin steps
-* don't mix UI locators or logic in .feature files
-* tag scenarios based on test type: `@smoke`, `@regression`, `@login`
-
----
-
-**summary**
-cucumber empowers teams to write **readable, maintainable, and executable specifications** for system behavior. its ability to map human-readable language to test logic helps ensure that everyone on the team understands what’s being tested and why.
+**summary**  
+cucumber is more than just a testing tool; it supports full specification by example, making test scenarios a collaborative bridge between requirements and automation. with proper structure, step reuse, and integration with selenium, it can drive robust bdd testing in any agile project.
