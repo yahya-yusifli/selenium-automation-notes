@@ -1,18 +1,22 @@
-## Screenshots in Selenium WebDriver
+# screenshots in selenium webdriver
 
+## overview
 
-**Overview**
+Selenium WebDriver provides powerful ways to take screenshots for:
 
-Selenium's `TakesScreenshot` interface enables you to capture images of:
-- The entire page
-- Specific elements
-- Browser viewport
+- Full page capture
+- Specific element capture
+- Base64-encoded screenshots (for embedding in reports)
 
-Screenshots are critical for debugging, reporting, and visual validation.
+These are essential for:
+
+- Debugging failed tests
+- Visual verification
+- Generating test reports
 
 ---
 
-**Capture Full Page Screenshot**
+## 🖥️ full page screenshot
 
 ```java
 import org.openqa.selenium.TakesScreenshot;
@@ -20,54 +24,119 @@ import org.openqa.selenium.OutputType;
 import java.io.File;
 import org.apache.commons.io.FileUtils;
 
-// Take a screenshot of the current page
 File src = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-// Save the screenshot to the specified file path
-FileUtils.copyFile(src, new File("/Users/yahyayusifli/Downloads/screenshot.png"));
+FileUtils.copyFile(src, new File("screenshots/test-failure.png"));
 ```
 
-**Notes:**
-- Stores screenshot as a PNG or BASE64 depending on OutputType.
-- Save files with unique names to avoid overwriting.
+### notes
+
+- Stores screenshot in `.png` format.
+- Always use unique filenames (e.g. with timestamp).
+- Create the folder `screenshots/` beforehand or use `File.mkdirs()`.
 
 ---
 
-**Capture Element Screenshot**
+## specific element screenshot (selenium 4+)
 
 ```java
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.By;
 
-WebElement element = driver.findElement(By.id("logo"));
-File elementShot = element.getScreenshotAs(OutputType.FILE);
-FileUtils.copyFile(elementShot, new File("element.png"));
+WebElement logo = driver.findElement(By.id("logo"));
+File elementShot = logo.getScreenshotAs(OutputType.FILE);
+FileUtils.copyFile(elementShot, new File("screenshots/logo.png"));
 ```
 
-**Notes:**
-- Requires Selenium 4+
-- Captures only the selected element’s visible area
+### notes
+
+- Works only with **Selenium 4+**.
+- Captures **only the visible part** of the element.
 
 ---
 
-**Capture Base64 Screenshot (for embedding)**
+## base64 screenshot (for embedding)
 
 ```java
-String base64Screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BASE64);
-// You can embed this directly into HTML reports
+String base64Screenshot = ((TakesScreenshot) driver)
+                            .getScreenshotAs(OutputType.BASE64);
+
+// Embed in HTML reports
+String imgTag = "<img src='data:image/png;base64," + base64Screenshot + "' />";
+```
+
+- Used in HTML-based reports (like ExtentReports, Allure).
+- No need to save to disk.
+
+---
+
+## when to capture screenshots
+
+| Scenario        | Use Case                             |
+|-----------------|---------------------------------------|
+| Test Failure    | Capture the UI state at failure       |
+| Visual Testing  | Compare layouts across releases       |
+| Test Reporting  | Attach proof of test steps or result  |
+
+---
+
+## 📁 screenshot best practices
+
+1. Use folders like `screenshots/{testName}/` or by date.
+2. Name files like `LoginTest_2025-09-02_13-22.png`
+3. Clean old screenshots programmatically if needed.
+4. Integrate screenshot capture inside failure hooks (`ITestListener`).
+
+---
+
+## 🔁 reusable screenshot utility method
+
+```java
+public static void captureScreenshot(WebDriver driver, String fileName) {
+    try {
+        File src = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+        String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String path = "screenshots/" + fileName + "_" + timestamp + ".png";
+        FileUtils.copyFile(src, new File(path));
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+}
+```
+
+**Usage:**
+
+```java
+ScreenshotUtil.captureScreenshot(driver, "LoginTest");
 ```
 
 ---
 
-**When to Use Screenshots**
+## integrate with testng listener
 
-- On Failures: Capture failure states for debugging
-- Visual Testing: Compare screenshots across runs
-- Reports: Attach screenshots to test result reports
+```java
+@Override
+public void onTestFailure(ITestResult result) {
+    WebDriver driver = Driver.getDriver(); // Singleton driver instance
+    String testName = result.getName();    // Failed test method name
+    ScreenshotUtil.captureScreenshot(driver, testName);
+}
+```
+
+Add `TestListener` to your `testng.xml`:
+
+```xml
+<listeners>
+    <listener class-name="utils.TestListener" />
+</listeners>
+```
 
 ---
 
-**Best Practices**
+## troubleshooting
 
-- Organize screenshots by test case and date
-- Automate cleanup of old screenshots to save space
-- Integrate screenshot capture in your test framework’s failure hooks
-
+| Problem                        | Solution                                      |
+|-------------------------------|-----------------------------------------------|
+| Screenshot file not saved     | Ensure directory exists or use `.mkdirs()`    |
+| `null` WebDriver in Listener  | Use Singleton Driver pattern                  |
+| Incomplete screenshot         | Consider using tools like **Ashot** for full-page |
+| SLF4J warnings                | Exclude or configure SLF4J dependencies       |
