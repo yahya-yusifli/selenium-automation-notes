@@ -560,6 +560,14 @@ public class HoverActions {
 
 ### 1. Action Builder Pattern
 
+**What is Action Builder Pattern?**
+A custom wrapper around Selenium's Actions class that stores actions in a sequence and executes them when needed, instead of executing immediately.
+
+**Why use it?**
+- Better readability for complex action sequences
+- Reusable action workflows
+- Execute multiple actions at once with better control
+
 ```java
 public class ActionBuilder {
     private Actions actions;
@@ -608,6 +616,12 @@ builder.click(element1)
 ```
 
 ### 2. Cross-Platform Actions
+
+**What is Cross-Platform Actions?**
+Handling keyboard shortcuts that differ between operating systems (Mac uses Cmd, Windows/Linux use Ctrl).
+
+**Why needed?**
+Different OS use different modifier keys for the same shortcuts (Copy: Cmd+C on Mac, Ctrl+C on Windows).
 
 ```java
 public class CrossPlatformActions {
@@ -776,12 +790,27 @@ public void reliableKeyCombo() {
 ## Key Points to Remember
 
 1. **Always call `.perform()`** to execute actions
-2. **Chain actions** for better performance
+   - **Why:** Actions class uses builder pattern - methods only build actions, `perform()` executes them
+
+2. **Chain actions** for better performance  
+   - **Why:** Single `perform()` sends all actions as one command, reducing network overhead and ensuring sequential execution
+
 3. **Use waits** for dynamic content
+   - **Why:** Actions often trigger asynchronous JavaScript (animations, AJAX) that needs time to complete
+
 4. **Handle cross-platform** differences (Cmd vs Ctrl)
+   - **Why:** Mac uses Command key where Windows/Linux use Control key for shortcuts
+
 5. **Test hover actions** carefully - they're sensitive
+   - **Why:** Hover depends on precise mouse positioning and timing; small changes in layout can break hover effects
+
 6. **Scroll elements into view** before interaction
+   - **Why:** Browsers can't interact with elements outside the viewport or hidden behind other elements
+
 7. **Add small pauses** for complex key combinations
+   - **Why:** Applications need time to process key events, especially modifier keys, to avoid missing combinations
+
 8. **Verify actions** completed successfully
+   - **Why:** Actions can silently fail due to timing, element state, or browser differences - always verify the expected result occurred
 
 Mouse and Keyboard Actions provide powerful capabilities for **realistic user simulation** and **comprehensive test coverage** in web automation testing.
